@@ -28,7 +28,7 @@ import {
   Check,
 } from "lucide-react";
 import logoImg from "@/imports/Screenshot_2026-07-02_at_10.57.55.png";
-import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
+import { ImageWithFallback } from "@/app/components/ImageWithFallback";
 import videoThumbnail from "@/imports/video.jpg";
 import mayPhoto from "@/imports/unnamed.png";
 import whySection from "@/imports/unnamed-2.png";

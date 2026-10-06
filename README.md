@@ -1,11 +1,26 @@
+# Pilates With May
 
-  # Create Pilates Sales One Pager
+דף נחיתה לקורס פילאטיס להריון של מאי צבי.
 
-  This is a code bundle for Create Pilates Sales One Pager. The original project is available at https://www.figma.com/design/WZkAECSfJx3Z7VnY11PppG/Create-Pilates-Sales-One-Pager.
+נבנה עם React, Vite ו-Tailwind CSS.
 
-  ## Running the code
+## הרצה מקומית
 
-  Run `npm i` to install the dependencies.
+```bash
+npm install
+npm run dev
+```
 
-  Run `npm run dev` to start the development server.
-  
+## בנייה לפרודקשן
+
+```bash
+npm run build
+```
+
+הקבצים הסטטיים נוצרים בתיקייה `dist/`. לבדיקה מקומית של ה-build: `npm run preview`.
+
+## מבנה הפרויקט
+
+- `src/app/App.tsx` – הדף עצמו
+- `src/imports/` – תמונות
+- `src/styles/` – עיצוב, פונטים ו-theme
