@@ -350,6 +350,9 @@ export default function App() {
 
           <CtaButton large onOpen={() => setHealthModalOpen(true)} />
           <p className="mt-4 text-sm text-[#8a6b62]">מחיר השקה מיוחד · ₪369.90 בלבד</p>
+          <p className="mt-2 text-base tracking-widest text-[#c08070] uppercase font-['Lora'] italic leading-relaxed">
+            ניתן לקבל החזר כספי עבור הקורס מקופת החולים (סל הריון) או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה.
+          </p>
         </div>
       </section>
 
@@ -621,6 +624,9 @@ export default function App() {
               <span className="text-2xl md:text-3xl font-medium text-[#8a6b62]/70 line-through decoration-[#c08070] decoration-2">499.90 ש"ח</span>
             </div>
             <div className="text-7xl font-extrabold text-[#3a2620] mb-1">369.90 ש"ח</div>
+            <p className="text-base tracking-widest text-[#c08070] uppercase font-['Lora'] italic leading-relaxed mt-3 mb-3">
+              ניתן לקבל החזר כספי עבור הקורס מקופת החולים (סל הריון) או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה.
+            </p>
             <p className="text-[#8a6b62] text-sm mb-8">תשלום חד-פעמי</p>
 
             <ul className="space-y-3 text-right mb-10">
