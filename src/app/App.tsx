@@ -18,8 +18,6 @@ import {
   AlertTriangle,
   HelpCircle,
   ShieldAlert,
-  Phone,
-  Mail,
   User,
   Heart,
   Shield,
@@ -281,8 +279,6 @@ function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
 export default function App() {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-  const [submitted, setSubmitted] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [healthModalOpen, setHealthModalOpen] = useState(false);
 
@@ -666,43 +662,19 @@ export default function App() {
         <div className="max-w-md mx-auto text-center">
           <p className="text-sm tracking-[0.25em] text-[#c08070] uppercase font-['Lora'] italic mb-4">צרי קשר</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-3">יש לך שאלות?</h2>
-          <p className="text-[#8a6b62] mb-10">השאירי פרטים ואחזור אלייך בהקדם</p>
+          <p className="text-[#8a6b62] mb-10">שלחי לי הודעה בווטסאפ ואחזור אלייך בהקדם</p>
 
-          {submitted ? (
-            <div className="bg-[#f7ede6] border border-[#e8cfc5] rounded-3xl p-10 text-center">
-              <div className="text-4xl mb-4">✨</div>
-              <h3 className="text-2xl font-bold mb-2">קיבלתי!</h3>
-              <p className="text-[#8a6b62]">אחזור אלייך בהקדם — מבטיחה 🌸</p>
-            </div>
-          ) : (
-            <form className="space-y-4" onSubmit={(e) => {
-              e.preventDefault();
-              const subject = encodeURIComponent("פנייה מהאתר - " + formData.name);
-              const body = encodeURIComponent(`שם: ${formData.name}\nאימייל: ${formData.email}\nטלפון: ${formData.phone}`);
-              window.location.href = `mailto:Mayzvipilates@gmail.com?subject=${subject}&body=${body}`;
-              setSubmitted(true);
-            }}>
-              {[
-                { icon: User,  type: "text",  placeholder: "שם מלא",       field: "name"  },
-                { icon: Mail,  type: "email", placeholder: "כתובת אימייל", field: "email" },
-                { icon: Phone, type: "tel",   placeholder: "מספר טלפון",   field: "phone" },
-              ].map(({ icon: Icon, type, placeholder, field }) => (
-                <div key={field} className="relative">
-                  <Icon className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8a6b62]" />
-                  <input
-                    type={type}
-                    placeholder={placeholder}
-                    value={formData[field as keyof typeof formData]}
-                    onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
-                    className="w-full bg-[#f7ede6] border border-[#e8cfc5] rounded-2xl px-5 py-4 pr-11 text-[#3a2620] placeholder:text-[#8a6b62]/60 focus:outline-none focus:border-[#c08070]/60 transition-colors"
-                  />
-                </div>
-              ))}
-              <button type="submit" className="w-full bg-[#c08070] text-white font-bold py-4 rounded-full hover:bg-[#b87060] transition-all hover:shadow-md">
-                שליחה
-              </button>
-            </form>
-          )}
+          <a
+            href={`https://wa.me/972509900939?text=${encodeURIComponent("היי מאי, הגעתי מהאתר ויש לי שאלה לגבי הקורס 🌸")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-3 w-full bg-[#25D366] text-white font-bold text-lg py-4 rounded-full hover:bg-[#1ebe5b] transition-all hover:shadow-md"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            שלחי לי הודעה בווטסאפ
+          </a>
         </div>
       </section>
 
