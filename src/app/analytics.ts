@@ -1,7 +1,7 @@
 // ─── ANALYTICS ────────────────────────────────────────────────────────────────
 // Google Analytics 4 + Meta Pixel. Each one loads only once its ID is filled in.
 const GA_ID = "G-8S8HPPELV4";
-const PIXEL_ID = ""; // e.g. "1234567890123456"
+const PIXEL_ID = "2378787512861639";
 
 const COURSE_PRICE = 369.9;
 
