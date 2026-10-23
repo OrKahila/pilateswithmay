@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import logoImg from "@/imports/Screenshot_2026-07-02_at_10.57.55.png";
 import { ImageWithFallback } from "@/app/components/ImageWithFallback";
+import { trackCourseInterest, trackCheckout, trackWhatsApp } from "@/app/analytics";
 import videoThumbnail from "@/imports/video.jpg";
 import mayPhoto from "@/imports/unnamed.png";
 import whySection from "@/imports/unnamed-2.png";
@@ -112,6 +113,7 @@ function HealthDeclarationModal({ onClose }: { onClose: () => void }) {
   const [signed, setSigned] = useState(false);
 
   const handleProceed = () => {
+    trackCheckout();
     window.open(COURSE_URL, "_blank", "noopener,noreferrer");
     onClose();
   };
@@ -281,6 +283,10 @@ function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
 export default function App() {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [healthModalOpen, setHealthModalOpen] = useState(false);
+  const openCourse = (location: string) => {
+    trackCourseInterest(location);
+    setHealthModalOpen(true);
+  };
 
   return (
     <div dir="rtl" className="font-['Heebo'] bg-[#f7ede6] text-[#3a2620] overflow-x-hidden">
@@ -344,7 +350,7 @@ export default function App() {
             )}
           </div>
 
-          <CtaButton large onOpen={() => setHealthModalOpen(true)} />
+          <CtaButton large onOpen={() => openCourse("hero")} />
           <p className="mt-4 text-sm text-[#8a6b62]">מחיר השקה מיוחד · ₪369.90 בלבד</p>
           <p className="mt-2 text-base tracking-widest text-[#c08070] uppercase font-['Lora'] italic leading-relaxed">
             ניתן לקבל החזר כספי עבור הקורס מקופת החולים (סל הריון) או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה.
@@ -479,7 +485,7 @@ export default function App() {
             ))}
           </div>
 
-          <CtaButton onOpen={() => setHealthModalOpen(true)} />
+          <CtaButton onOpen={() => openCourse("course_features")} />
         </div>
       </section>
 
@@ -539,7 +545,7 @@ export default function App() {
           </div>
 
           <div className="text-center mt-10">
-            <CtaButton onOpen={() => setHealthModalOpen(true)} />
+            <CtaButton onOpen={() => openCourse("bonuses")} />
           </div>
         </div>
       </section>
@@ -643,7 +649,7 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => setHealthModalOpen(true)}
+              onClick={() => openCourse("pricing")}
               className="block w-full bg-[#c08070] text-white font-bold text-xl py-5 rounded-full shadow hover:bg-[#b87060] transition-all hover:shadow-lg hover:scale-[1.01] active:scale-100 text-center"
             >
               אני רוצה את הקורס!
@@ -668,6 +674,7 @@ export default function App() {
             href={`https://wa.me/972509900939?text=${encodeURIComponent("היי מאי, הגעתי מהאתר ויש לי שאלה לגבי הקורס 🌸")}`}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackWhatsApp}
             className="inline-flex items-center justify-center gap-3 w-full bg-[#25D366] text-white font-bold text-lg py-4 rounded-full hover:bg-[#1ebe5b] transition-all hover:shadow-md"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
