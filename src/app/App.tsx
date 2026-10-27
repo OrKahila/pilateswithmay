@@ -106,7 +106,6 @@ function CountdownTimer() {
 }
 
 const COURSE_URL = "https://my.schooler.biz/s/110160/1771330032864";
-const HEALTH_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScVxQ_NcjV-gPrvXtSx4zONMo_geTJltge7Wc9I6uiP5H2fnw/viewform?embedded=true";
 
 // ─── THANK-YOU PAGE (after purchase) ─────────────────────────────────────────
 // Schooler redirects buyers here after payment: /thank-you
@@ -138,33 +137,6 @@ function ThankYouPage() {
             </a>
           </p>
         </div>
-        <p className="text-[#8a6b62] mb-8 leading-relaxed">
-          לפני שמתחילות לתרגל, נשאר צעד אחד קטן וחשוב:
-          <br />
-          <span className="font-bold text-[#3a2620]">מילוי הצהרת הבריאות</span> – כדי שהתרגול יהיה בטוח ומותאם לך.
-        </p>
-
-        <div className="bg-[#fdf5f0] rounded-[2rem] border border-[#e8cfc5] shadow-sm overflow-hidden">
-          <iframe
-            src={HEALTH_FORM_URL}
-            className="w-full border-0"
-            style={{ height: "75dvh", minHeight: "520px" }}
-            title="הצהרת בריאות"
-          />
-        </div>
-
-        <p className="text-sm text-[#8a6b62] mt-6">
-          יש שאלה? אני כאן בשבילך ❤️{" "}
-          <a
-            href={`https://wa.me/972509900939?text=${encodeURIComponent("היי מאי, נרשמתי לקורס ויש לי שאלה 🌸")}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackWhatsApp}
-            className="text-[#c08070] font-semibold underline"
-          >
-            שלחי לי הודעה בווטסאפ
-          </a>
-        </p>
       </div>
     </div>
   );
