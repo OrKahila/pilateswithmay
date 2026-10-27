@@ -1,7 +1,8 @@
 // ─── ANALYTICS ────────────────────────────────────────────────────────────────
-// Google Analytics 4 + Meta Pixel. Each one loads only once its ID is filled in.
-const GA_ID = "G-8S8HPPELV4";
-const PIXEL_ID = "2378787512861639";
+// Google Analytics 4 + Meta Pixel. Off on localhost so local testing doesn't pollute real data.
+const IS_LOCAL = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+const GA_ID = IS_LOCAL ? "" : "G-8S8HPPELV4";
+const PIXEL_ID = IS_LOCAL ? "" : "2378787512861639";
 
 const COURSE_PRICE = 369.9;
 
@@ -51,16 +52,25 @@ function track(gaEvent: string, gaParams: Record<string, unknown>, pixelEvent: s
   if (PIXEL_ID && window.fbq) window.fbq(custom ? "trackCustom" : "track", pixelEvent, pixelParams);
 }
 
-// "אני רוצה את הקורס!" clicked – health declaration opens
+// "אני רוצה את הקורס!" clicked
 export const trackCourseInterest = (location: string) =>
   track("course_cta_click", { location }, "CourseCtaClick", { location }, true);
 
-// Health declaration confirmed – visitor sent to the purchase page
+// Visitor sent to the purchase page
 export const trackCheckout = () =>
   track(
     "begin_checkout",
     { currency: "ILS", value: COURSE_PRICE, items: [{ item_name: "קורס פילאטיס להריון", price: COURSE_PRICE }] },
     "InitiateCheckout",
+    { currency: "ILS", value: COURSE_PRICE }
+  );
+
+// Thank-you page reached – Schooler redirects here after payment
+export const trackPurchase = () =>
+  track(
+    "purchase",
+    { currency: "ILS", value: COURSE_PRICE, items: [{ item_name: "קורס פילאטיס להריון", price: COURSE_PRICE }] },
+    "Purchase",
     { currency: "ILS", value: COURSE_PRICE }
   );
 

@@ -4,3 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Post-purchase page (Schooler redirects here); served by the single-page app
+[[redirects]]
+  from = "/thank-you"
+  to = "/index.html"
+  status = 200

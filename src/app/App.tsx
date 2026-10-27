@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import logoImg from "@/imports/Screenshot_2026-07-02_at_10.57.55.png";
 import { ImageWithFallback } from "@/app/components/ImageWithFallback";
-import { trackCourseInterest, trackCheckout, trackWhatsApp } from "@/app/analytics";
+import { trackCourseInterest, trackCheckout, trackPurchase, trackWhatsApp } from "@/app/analytics";
 import videoThumbnail from "@/imports/video.jpg";
 import mayPhoto from "@/imports/unnamed.png";
 import whySection from "@/imports/unnamed-2.png";
@@ -108,64 +108,63 @@ function CountdownTimer() {
 const COURSE_URL = "https://my.schooler.biz/s/110160/1771330032864";
 const HEALTH_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScVxQ_NcjV-gPrvXtSx4zONMo_geTJltge7Wc9I6uiP5H2fnw/viewform?embedded=true";
 
-// ─── HEALTH DECLARATION MODAL ────────────────────────────────────────────────
-function HealthDeclarationModal({ onClose }: { onClose: () => void }) {
-  const [signed, setSigned] = useState(false);
-
-  const handleProceed = () => {
-    trackCheckout();
-    window.open(COURSE_URL, "_blank", "noopener,noreferrer");
-    onClose();
-  };
+// ─── THANK-YOU PAGE (after purchase) ─────────────────────────────────────────
+// Schooler redirects buyers here after payment: /thank-you
+function ThankYouPage() {
+  useEffect(() => {
+    trackPurchase();
+  }, []);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: "rgba(58,38,32,0.55)", backdropFilter: "blur(4px)" }}
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      <div className="bg-[#fdf5f0] rounded-[2rem] w-full max-w-lg flex flex-col shadow-2xl overflow-hidden" style={{ maxHeight: "90dvh" }}>
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8cfc5] flex-shrink-0">
-          <h2 className="text-xl font-bold text-[#3a2620]">הצהרת בריאות</h2>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-[#8a6b62] hover:bg-[#ecddd7] transition-colors text-lg leading-none"
-            aria-label="סגור"
-          >
-            ✕
-          </button>
+    <div dir="rtl" className="font-['Heebo'] bg-[#f7ede6] text-[#3a2620] min-h-full px-4 py-12">
+      <div className="max-w-2xl mx-auto text-center">
+        <ImageWithFallback src={logoImg} alt="Pilates with May" className="w-24 mx-auto mb-6 object-contain" />
+        <div className="text-4xl mb-3">🎉</div>
+        <h1 className="text-3xl md:text-4xl font-bold mb-3">תודה שנרשמת לקורס!</h1>
+        <div className="bg-[#fdf5f0] border border-[#e8cfc5] rounded-2xl px-5 py-4 mb-6 leading-relaxed">
+          <p className="font-bold">📩 פרטי הכניסה לקורס נשלחו אלייך במייל</p>
+          <p className="text-sm text-[#8a6b62] mt-1">
+            לא מוצאת? כדאי לבדוק גם בתיקיית הספאם / דואר זבל.
+            <br />
+            ואם משהו לא עובד – אני כאן,{" "}
+            <a
+              href={`https://wa.me/972509900939?text=${encodeURIComponent("היי מאי, נרשמתי לקורס ולא הצלחתי להיכנס 🌸")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={trackWhatsApp}
+              className="text-[#c08070] font-semibold underline"
+            >
+              דברי איתי בווטסאפ
+            </a>
+          </p>
         </div>
+        <p className="text-[#8a6b62] mb-8 leading-relaxed">
+          לפני שמתחילות לתרגל, נשאר צעד אחד קטן וחשוב:
+          <br />
+          <span className="font-bold text-[#3a2620]">מילוי הצהרת הבריאות</span> – כדי שהתרגול יהיה בטוח ומותאם לך.
+        </p>
 
-        {/* Form iframe */}
-        <div className="flex-1 overflow-hidden min-h-0">
+        <div className="bg-[#fdf5f0] rounded-[2rem] border border-[#e8cfc5] shadow-sm overflow-hidden">
           <iframe
             src={HEALTH_FORM_URL}
-            className="w-full h-full border-0"
-            style={{ minHeight: "420px" }}
+            className="w-full border-0"
+            style={{ height: "75dvh", minHeight: "520px" }}
             title="הצהרת בריאות"
           />
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-5 border-t border-[#e8cfc5] flex-shrink-0 flex flex-col gap-3">
-          <label className="flex items-center gap-3 cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={signed}
-              onChange={(e) => setSigned(e.target.checked)}
-              className="w-5 h-5 accent-[#c08070] cursor-pointer flex-shrink-0"
-            />
-            <span className="text-sm text-[#3a2620] leading-snug">אני מאשרת כי קראתי את הצהרת הבריאות, הבנתי את תוכנה ואני מסכימה לכל האמור בה.</span>
-          </label>
-          <button
-            onClick={handleProceed}
-            disabled={!signed}
-            className="w-full bg-[#c08070] text-white font-bold text-lg py-4 rounded-full transition-all hover:bg-[#b87060] hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#c08070] disabled:hover:shadow-none"
+        <p className="text-sm text-[#8a6b62] mt-6">
+          יש שאלה? אני כאן בשבילך ❤️{" "}
+          <a
+            href={`https://wa.me/972509900939?text=${encodeURIComponent("היי מאי, נרשמתי לקורס ויש לי שאלה 🌸")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={trackWhatsApp}
+            className="text-[#c08070] font-semibold underline"
           >
-            המשך לרכישה
-          </button>
-        </div>
+            שלחי לי הודעה בווטסאפ
+          </a>
+        </p>
       </div>
     </div>
   );
@@ -281,16 +280,20 @@ function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
 
 // ─── APP ─────────────────────────────────────────────────────────────────────
 export default function App() {
+  if (window.location.pathname.replace(/\/+$/, "") === "/thank-you") return <ThankYouPage />;
+  return <LandingPage />;
+}
+
+function LandingPage() {
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [healthModalOpen, setHealthModalOpen] = useState(false);
   const openCourse = (location: string) => {
     trackCourseInterest(location);
-    setHealthModalOpen(true);
+    trackCheckout();
+    window.location.href = COURSE_URL;
   };
 
   return (
     <div dir="rtl" className="font-['Heebo'] bg-[#f7ede6] text-[#3a2620] overflow-x-hidden">
-      {healthModalOpen && <HealthDeclarationModal onClose={() => setHealthModalOpen(false)} />}
 
       {/*══════════════════════════════════════════════════
           HERO — logo image as background
