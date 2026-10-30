@@ -105,7 +105,7 @@ function CountdownTimer() {
   );
 }
 
-const COURSE_URL = "https://my.schooler.biz/s/110160/1771330032864";
+const COURSE_URL = "https://my.schooler.biz/s/110160/user/signup?bundle=106169";
 
 // ─── THANK-YOU PAGE (after purchase) ─────────────────────────────────────────
 // Schooler redirects buyers here after payment: /thank-you
@@ -123,7 +123,7 @@ function ThankYouPage() {
         <div className="bg-[#fdf5f0] border border-[#e8cfc5] rounded-2xl px-5 py-4 mb-6 leading-relaxed">
           <p className="font-bold">📩 פרטי הכניסה לקורס נשלחו אלייך במייל</p>
           <p className="text-sm text-[#8a6b62] mt-1">
-            לא מוצאת? כדאי לבדוק גם בתיקיית הספאם / דואר זבל.
+            לא מוצאת? כדאי לבדוק גם בתיקיית הספאם / דואר זבל ובלשונית "מכירות" בג'ימייל.
             <br />
             ואם משהו לא עובד – אני כאן,{" "}
             <a
