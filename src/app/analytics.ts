@@ -77,3 +77,7 @@ export const trackPurchase = () =>
 // WhatsApp button clicked
 export const trackWhatsApp = () =>
   track("contact_whatsapp", {}, "Contact");
+
+// "Free first lesson" gift requested via WhatsApp
+export const trackGiftLead = (location: string) =>
+  track("generate_lead", { location, lead_type: "free_lesson_whatsapp" }, "Lead", { content_name: "free_lesson_whatsapp", location });
