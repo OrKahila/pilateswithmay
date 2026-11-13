@@ -161,6 +161,50 @@ function CtaButton({ label = "אני רוצה את הקורס!", secondary = fal
   );
 }
 
+// ─── REIMBURSEMENT BADGE ──────────────────────────────────────────────────────
+function RefundBadge({ className = "" }: { className?: string }) {
+  return (
+    <div className={`bg-white/80 border-2 border-[#c08070] rounded-2xl px-5 py-4 text-center shadow-sm ${className}`}>
+      <p className="text-lg md:text-xl font-bold text-[#3a2620] leading-snug">
+        💰 אפשר לקבל החזר על הקורס מסל ההריון של קופת החולים
+      </p>
+      <p className="text-sm text-[#8a6b62] mt-1">
+        או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה
+      </p>
+    </div>
+  );
+}
+
+// ─── STICKY MOBILE CTA ────────────────────────────────────────────────────────
+function StickyMobileCta({ onOpen }: { onOpen: () => void }) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const pricing = document.getElementById("pricing");
+      const nearPricing = pricing ? pricing.getBoundingClientRect().top < window.innerHeight : false;
+      setShow(window.scrollY > 900 && !nearPricing);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div
+      className={`md:hidden fixed bottom-0 inset-x-0 z-50 px-4 pb-4 pt-3 bg-gradient-to-t from-[#f7ede6] via-[#f7ede6]/95 to-transparent transition-transform duration-300 ${
+        show ? "translate-y-0" : "translate-y-full"
+      }`}
+    >
+      <button
+        type="button"
+        onClick={onOpen}
+        className="w-full bg-[#c08070] text-white font-bold text-lg py-4 rounded-full shadow-lg active:scale-[0.99]"
+      >
+        אני רוצה את הקורס! · ₪369.90
+      </button>
+    </div>
+  );
+}
+
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 const whyPoints = [
   { icon: Activity,      label: "כאבי גב ואגן" },
@@ -194,9 +238,9 @@ const bonuses = [
   { icon: CheckSquare, title: "צ'קליסט ציוד ללידה",             desc: "רשימת ציוד מסודרת לבית החולים ולימים הראשונים שלאחר הלידה.\nכדי שתוכלי להתארגן בראש שקט ולא לחשוש ששכחת משהו." },
 ];
 
-const testimonials = [
-  { name: "עתליה", photo: alonaImg,   text: "אני ממליצה בחום על מאי כמדריכת פילאטיס. היא ליוותה אותי גם לפני ההיריון וגם במהלכו, ותמיד הרגשתי שאני בידיים מקצועיות ואכפתיות.\n\nמאי מעניקה יחס אישי לכל מתאמן ומתאמנת, מוודאת שכל אחד מבין את התרגילים בצורה נכונה ובטוחה. היא קשובה, סבלנית, ותמיד מקפידה להסביר עד שכולם מבינים.\n\nמעבר למקצועיות שלה, מאי היא אדם נעים, חם ומכיל, שיוצר אווירה נעימה ומזמינה בכל שיעור. היא הרבה יותר ממדריכת פילאטיס – היא חברה אמיתית שתומכת, מעודדת וגורמת לך לרצות להגיע לכל אימון מחדש. ממליצה עליה מכל הלב!" },
-  { name: "תאיר",  photo: tairImg,    text: "אצל מאי, פעם ראשונה שהגעתי לשיעור ספורט כלשהו ולא הסתכלתי פעם אחת על השעון עד סוף השיעור. זה היה האות להבין שאיתה אני חייבת להמשיך.\n\nכשהמסע שלנו התחיל אני באתי בגלל כאבי גב ורק ״כי צריך״ ואחרי כמה מפגשים ושיפור ניכר, כבר הרגשתי שאני מחכה לשיעורים. לא חשבתי שאגיע לזה.\n\nמאי יודעת לזהות, לדייק ולשפר. מכירה את הגוף טוב כל כך.\n\nאני מתאמנת אצל מאי הרבה לפני ההיריון וגם בהיריון עצמו. מרגישה בטוחה, שהיא יודעת לכוון אותי גם אם זה בהנחייה מרחוק, ושאפשר לסמוך ולהתמסר." },
+const testimonials: { name: string; photo: string; text: string; pregnant?: boolean }[] = [
+  { name: "עתליה", photo: alonaImg,   pregnant: true, text: "אני ממליצה בחום על מאי כמדריכת פילאטיס. היא ליוותה אותי גם לפני ההיריון וגם במהלכו, ותמיד הרגשתי שאני בידיים מקצועיות ואכפתיות.\n\nמאי מעניקה יחס אישי לכל מתאמן ומתאמנת, מוודאת שכל אחד מבין את התרגילים בצורה נכונה ובטוחה. היא קשובה, סבלנית, ותמיד מקפידה להסביר עד שכולם מבינים.\n\nמעבר למקצועיות שלה, מאי היא אדם נעים, חם ומכיל, שיוצר אווירה נעימה ומזמינה בכל שיעור. היא הרבה יותר ממדריכת פילאטיס – היא חברה אמיתית שתומכת, מעודדת וגורמת לך לרצות להגיע לכל אימון מחדש. ממליצה עליה מכל הלב!" },
+  { name: "תאיר",  photo: tairImg,    pregnant: true, text: "אצל מאי, פעם ראשונה שהגעתי לשיעור ספורט כלשהו ולא הסתכלתי פעם אחת על השעון עד סוף השיעור. זה היה האות להבין שאיתה אני חייבת להמשיך.\n\nכשהמסע שלנו התחיל אני באתי בגלל כאבי גב ורק ״כי צריך״ ואחרי כמה מפגשים ושיפור ניכר, כבר הרגשתי שאני מחכה לשיעורים. לא חשבתי שאגיע לזה.\n\nמאי יודעת לזהות, לדייק ולשפר. מכירה את הגוף טוב כל כך.\n\nאני מתאמנת אצל מאי הרבה לפני ההיריון וגם בהיריון עצמו. מרגישה בטוחה, שהיא יודעת לכוון אותי גם אם זה בהנחייה מרחוק, ושאפשר לסמוך ולהתמסר." },
   { name: "מלכה",  photo: malkaImg,   text: "אני מתאמנת אצל מאי כשנתיים. הכרתי מדריכה שנכנסת לשיעור עם חיוך גדול ושמחה לאמן, מעבירה שיעור בצורה מקצועית ביותר. כמהנדסת אני יושבת שעות על כסא ומול מסך, שיעורי הפילאטיס עושים פלאים בשרירים ובגמישות! וכן כבר אין כאבי גב וצוואר. השיעורים חוויתיים ואני מצפה להם." },
   { name: "רותם",  photo: rotemImg,   text: "אצל מאי התחלתי לתרגל פילאטיס ופשוט התאהבתי! גם באימון וגם בה. היא יודעת לדייק ולשים לב לכל מתאמן שלה." },
   { name: "טלי",   photo: taliImg,    text: "התחלתי להתאמן אצל מאי אחרי תקופה שלא עשיתי פילאטיס, וכבר מהאימונים הראשונים הרגשתי שהגוף שלי מתחזק ומתעצב.\nמעבר לאימון עצמו, תמיד מרגישים שמאי רואה כל מתאמן. היא מסבירה את התרגילים בצורה ברורה כך שגם אם לא מבינים פילאטיס מבינים מה לעשות.\n\nתמיד הרגשתי בנוח ובידיים טובות, באווירה נעימה, רגועה ומקצועית, שגורמת ממש לחכות לכל אימון.\n\nלגמרי ממליצה לכל אחד שמחפש מדריכת פילאטיס מקצועית, קשובה ואכפתית, שבאמת עוזרת להתחזק ולהרגיש טוב יותר בגוף. ❤️" },
@@ -222,6 +266,43 @@ const faqs = [
   { q: "האם אפשר להמשיך לתרגל את הקורס גם לאחר הלידה?",      a: "בהחלט. לאחר תקופת משכב הלידה, ובכפוף לאישור הרופא המטפל או פיזיותרפיסטית לרצפת האגן (במידת הצורך), תוכלי לחזור לתרגל את הקורס. התרגולים יכולים לסייע בחזרה הדרגתית לתנועה, בחיזוק שרירי הליבה ורצפת האגן ובהתחברות מחודשת לגוף לאחר הלידה." },
   { q: "האם מאוחר מדי להתחיל אם אני כבר בטרימסטר השני או השלישי?", a: "ממש לא. אפשר להתחיל את הקורס בכל שלב של ההריון. התרגולים מותאמים להתקדמות ההריון, כך שגם אם לא התחלת מההתחלה, עדיין תוכלי ליהנות מהיתרונות של פילאטיס בהריון ולחזק את הגוף לקראת הלידה. כמובן, מומלץ לתרגל לאחר אישור מהרופא המטפל." },
 ];
+
+// ─── TESTIMONIAL CARD ─────────────────────────────────────────────────────────
+// Long texts are folded to a few lines with a "read more" toggle.
+function TestimonialCard({ name, photo, text, pregnant }: { name: string; photo: string; text: string; pregnant?: boolean }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = text.length > 220;
+  return (
+    <div className="bg-[#fdf5f0] rounded-3xl p-6 border border-[#e8cfc5] flex flex-col gap-4">
+      {pregnant && (
+        <span className="self-start text-xs font-bold bg-[#c08070]/15 text-[#c08070] rounded-full px-3 py-1">
+          🤰 התאמנה איתי גם בהריון
+        </span>
+      )}
+      <div className="relative bg-[#dcf8c6] rounded-2xl rounded-br-none p-4 text-sm text-[#2c3e2d] leading-relaxed shadow-sm flex-1">
+        <div className={isLong && !expanded ? "line-clamp-5" : undefined}>
+          {text.split("\n").map((line, i, all) => (
+            <span key={i}>{line}{i < all.length - 1 && <br />}</span>
+          ))}
+        </div>
+        {isLong && (
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="mt-2 text-xs font-bold text-[#2c3e2d]/70 underline"
+          >
+            {expanded ? "הצג פחות" : "קראי עוד"}
+          </button>
+        )}
+        <div className="absolute bottom-0 right-[-8px] w-0 h-0 border-l-8 border-l-[#dcf8c6] border-t-8 border-t-transparent" />
+      </div>
+      <div className="flex items-center gap-3 justify-end">
+        <p className="font-bold text-[#3a2620] text-sm">{name}</p>
+        <ImageWithFallback src={photo} alt={name} className="w-10 h-10 rounded-full flex-shrink-0 object-cover" />
+      </div>
+    </div>
+  );
+}
 
 // ─── FAQ ACCORDION ────────────────────────────────────────────────────────────
 function FaqAccordion({ items }: { items: { q: string; a: string }[] }) {
@@ -296,8 +377,9 @@ function LandingPage() {
             <span className="block text-xl md:text-2xl lg:text-3xl text-[#c08070]">עכשיו הגיע הזמן להכין אותו לזה.</span>
           </h1>
 
-          <p className="text-base md:text-lg text-[#6b4c42] leading-relaxed mb-10 font-light">
-            אני גאה להשיק את <span className="font-bold text-[#3a2620]">הקורס פילאטיס דיגיטלי הראשון מסוגו בישראל לנשים בהריון</span>.<br />הגיע הזמן ללוות את ההריון שלך עם תנועה נכונה, תרגול בטוח <span className="font-bold text-[#3a2620]">והכנה אמיתית לרגע הגדול והמרגש ביותר בחייך!</span> כאן תלמדי <span className="font-bold text-[#3a2620]">לחזק את הגוף</span>, לתמוך <span className="font-bold text-[#3a2620]">ברצפת האגן ובשרירי הליבה</span>, לנוע <span className="font-bold text-[#3a2620]">בביטחון</span> ולהעניק לעצמך את <span className="font-bold text-[#3a2620]">ההכנה שבאמת מגיעה לך</span> כדי להרגיש חזקה, בטוחה ומחוברת לגוף שלך בכל שלב בדרך.
+          <p className="text-base md:text-lg text-[#6b4c42] leading-relaxed mb-8 font-light">
+            <span className="font-bold text-[#3a2620]">הקורס הדיגיטלי הראשון בישראל לפילאטיס בהריון</span>.<br />
+            תרגול בטוח מהבית, שיעזור לך <span className="font-bold text-[#3a2620]">לחזק את הגוף</span>, לתמוך <span className="font-bold text-[#3a2620]">ברצפת האגן ובשרירי הליבה</span> ולהגיע ללידה <span className="font-bold text-[#3a2620]">חזקה ובטוחה</span>.
           </p>
 
           <div className="relative w-full mb-10 rounded-[2rem] overflow-hidden shadow-xl aspect-video border border-[#e8cfc5]">
@@ -327,9 +409,7 @@ function LandingPage() {
 
           <CtaButton large onOpen={() => openCourse("hero")} />
           <p className="mt-4 text-sm text-[#8a6b62]">מחיר השקה מיוחד · ₪369.90 בלבד</p>
-          <p className="mt-2 text-base tracking-widest text-[#c08070] uppercase font-['Lora'] italic leading-relaxed">
-            ניתן לקבל החזר כספי עבור הקורס מקופת החולים (סל הריון) או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה.
-          </p>
+          <RefundBadge className="mt-6 w-full" />
         </div>
       </section>
 
@@ -540,25 +620,8 @@ function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {testimonials.map(({ name, photo, text }) => (
-              <div key={name} className="bg-[#fdf5f0] rounded-3xl p-6 border border-[#e8cfc5] flex flex-col gap-4">
-                <div className="relative bg-[#dcf8c6] rounded-2xl rounded-br-none p-4 text-sm text-[#2c3e2d] leading-relaxed shadow-sm flex-1">
-                  {text.split("\n").map((line, i) => (
-                    <span key={i}>{line}{i < text.split("\n").length - 1 && <br />}</span>
-                  ))}
-                  <div className="absolute bottom-0 right-[-8px] w-0 h-0 border-l-8 border-l-[#dcf8c6] border-t-8 border-t-transparent" />
-                </div>
-                <div className="flex items-center gap-3 justify-end">
-                  <p className="font-bold text-[#3a2620] text-sm">{name}</p>
-                  {photo ? (
-                    <ImageWithFallback src={photo} alt={name} className="w-10 h-10 rounded-full flex-shrink-0 object-cover" />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full flex-shrink-0 bg-[#e8cfc5] flex items-center justify-center">
-                      <User className="w-5 h-5 text-[#c08070]" />
-                    </div>
-                  )}
-                </div>
-              </div>
+            {testimonials.map((t) => (
+              <TestimonialCard key={t.name} {...t} />
             ))}
           </div>
         </div>
@@ -601,10 +664,8 @@ function LandingPage() {
               <span className="text-2xl md:text-3xl font-medium text-[#8a6b62]/70 line-through decoration-[#c08070] decoration-2">499.90 ש"ח</span>
             </div>
             <div className="text-7xl font-extrabold text-[#3a2620] mb-1">369.90 ש"ח</div>
-            <p className="text-base tracking-widest text-[#c08070] uppercase font-['Lora'] italic leading-relaxed mt-3 mb-3">
-              ניתן לקבל החזר כספי עבור הקורס מקופת החולים (סל הריון) או מביטוח בריאות פרטי, בכפוף לתנאי הזכאות והפוליסה.
-            </p>
-            <p className="text-[#8a6b62] text-sm mb-8">תשלום חד-פעמי</p>
+            <p className="text-[#8a6b62] text-sm mb-5">תשלום חד-פעמי</p>
+            <RefundBadge className="mb-8" />
 
             <ul className="space-y-3 text-right mb-10">
               {[
@@ -660,10 +721,12 @@ function LandingPage() {
         </div>
       </section>
 
+      <StickyMobileCta onOpen={() => openCourse("sticky_mobile")} />
+
       {/*══════════════════════════════════════════════════
           SIGN-OFF
       ══════════════════════════════════════════════════*/}
-      <section className="py-14 px-6 text-center border-t border-[#e8cfc5]">
+      <section className="py-14 pb-28 md:pb-14 px-6 text-center border-t border-[#e8cfc5]">
         <ImageWithFallback
           src={logoImg}
           alt="Pilates with May"
